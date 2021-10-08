@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:clima/services/location.dart';
 import 'package:clima/services/networking.dart';
+import 'package:clima/screens/location_screen.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoadingScreen extends StatefulWidget {
   @override
@@ -33,13 +35,21 @@ class _LoadingScreenState extends State<LoadingScreen> {
     print(temperature);
     print(condition);
     print(cityName);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => LocationScreen()),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Location should be printed now!'),
+        child: SpinKitWave(
+          color: Colors.white,
+          size: 50.0,
+        ),
       ), // Center
     ); // Scaffold
   }

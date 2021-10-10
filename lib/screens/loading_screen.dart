@@ -20,25 +20,15 @@ class _LoadingScreenState extends State<LoadingScreen> {
     Location location = Location();
     await location.getCurrentLocation();
 
-    var latitude = location.latitude;
-    var longitude = location.longitude;
-
     NetworkHelper networkHelper = NetworkHelper(
-        'https://samples.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=b6907d289e10d714a6e88b30761fae22');
+        'https://samples.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=b6907d289e10d714a6e88b30761fae22');
 
     var weatherData = await networkHelper.getData();
 
-    double temperature = weatherData['main']['temp'];
-    int condition = weatherData['weather'][0]['id'];
-    String cityName = weatherData['name'];
-
-    print(temperature);
-    print(condition);
-    print(cityName);
-
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => LocationScreen()),
+      MaterialPageRoute(
+          builder: (context) => LocationScreen(locationWeather: weatherData)),
     );
   }
 

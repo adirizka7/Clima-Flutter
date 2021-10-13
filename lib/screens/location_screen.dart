@@ -26,6 +26,14 @@ class _LocationScreenState extends State<LocationScreen> {
   }
 
   void updateUI(weatherData) {
+    print('updating weatherdata ui...');
+    if (weatherData == null) {
+      temperature = 0;
+      weatherIcon = 'Error';
+      weatherMessage = 'Unable to fetch weather data';
+      cityName = 'your city';
+      return;
+    }
     double temp = weatherData['main']['temp'];
     temperature = temp.toInt();
     weatherMessage = weatherModel.getMessage(temperature);
@@ -58,7 +66,9 @@ class _LocationScreenState extends State<LocationScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   FlatButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      updateUI(await WeatherModel().getLocationWeather());
+                    },
                     child: Icon(
                       Icons.near_me,
                       size: 50.0,

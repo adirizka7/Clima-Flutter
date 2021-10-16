@@ -15,8 +15,8 @@ class _CityScreenState extends State<CityScreen> {
           image: DecorationImage(
             image: AssetImage('images/city_background.jpg'),
             fit: BoxFit.cover,
-          ),
-        ),
+          ), // DecorationImage
+        ), // BoxDecoration
         constraints: BoxConstraints.expand(),
         child: SafeArea(
           child: Column(
@@ -28,24 +28,24 @@ class _CityScreenState extends State<CityScreen> {
                   child: Icon(
                     Icons.arrow_back_ios,
                     size: 50.0,
-                  ),
-                ),
-              ),
+                  ), // Icon
+                ), // FlatButton
+              ), // Align
               Container(
                 padding: EdgeInsets.all(20.0),
-                child: null,
-              ),
+                child: kTextField,
+              ), // Container
               FlatButton(
                 onPressed: () {},
                 child: Text(
                   'Get Weather',
                   style: kButtonTextStyle,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+                ), // Text
+              ), // FlatButton
+            ], // <Widget>
+          ), // Column
+        ), // SafeArea
+      ), // Container
+    ); // Scaffold
   }
 }

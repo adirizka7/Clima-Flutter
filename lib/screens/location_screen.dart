@@ -27,22 +27,24 @@ class _LocationScreenState extends State<LocationScreen> {
   }
 
   void updateUI(weatherData) {
-    print('updating weatherdata ui...');
-    if (weatherData == null) {
-      temperature = 0;
-      weatherIcon = 'Error';
-      weatherMessage = 'Unable to fetch weather data';
-      cityName = 'your city';
-      return;
-    }
-    double temp = weatherData['main']['temp'];
-    temperature = temp.toInt();
-    weatherMessage = weatherModel.getMessage(temperature);
+    setState(() {
+      print('updating weatherdata ui...');
+      if (weatherData == null) {
+        temperature = 0;
+        weatherIcon = 'Error';
+        weatherMessage = 'Unable to fetch weather data';
+        cityName = 'your city';
+        return;
+      }
+      double temp = weatherData['main']['temp'];
+      temperature = temp.toInt();
+      weatherMessage = weatherModel.getMessage(temperature);
 
-    var condition = weatherData['weather'][0]['id'];
-    weatherIcon = weatherModel.getWeatherIcon(condition);
+      var condition = weatherData['weather'][0]['id'];
+      weatherIcon = weatherModel.getWeatherIcon(condition);
 
-    cityName = weatherData['name'];
+      cityName = weatherData['name'];
+    });
   }
 
   @override
@@ -76,13 +78,17 @@ class _LocationScreenState extends State<LocationScreen> {
                     ),
                   ),
                   FlatButton(
-                    onPressed: () {
-                      Navigator.push(
+                    onPressed: () async {
+                      var typedName = await Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => CityScreen(),
                         ),
                       );
+                      if (typedName != null) {
+                        updateUI(
+                            await WeatherModel().getCityWeather(typedName));
+                      }
                     },
                     child: Icon(
                       Icons.location_city,
